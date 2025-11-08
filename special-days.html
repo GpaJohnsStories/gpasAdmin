@@ -467,19 +467,17 @@
             return;
         }
         
-        previewCell.innerHTML = `
-            previewCell.innerHTML = `
-    <img src="${data.photo_link_1 || 'placeholder.jpg'}" width="55" height="55" alt="${textCode}" style="vertical-align: middle;">
-    <span class="story-details" style="display: inline-block; vertical-align: middle;">
-        <strong>${data.title}</strong><br>
-        ${data.author} | ${data.category}<br>
-        Status: ${data.publication_status_code}
+previewCell.innerHTML = `
+    <span style="display: flex; align-items: center; gap: 10px;">
+        <img src="${data.photo_link_1 || 'placeholder.jpg'}" width="55" height="55" alt="${textCode}">
+        <span class="story-details">
+            <strong>${data.title}</strong><br>
+            ${data.author} | ${data.category}<br>
+            Status: ${data.publication_status_code}
+        </span>
     </span>
 `;
 
-        `;
-    }
-    
     // Cancel new row
     function cancelNewRow(btn) {
         const row = btn.closest('tr');
