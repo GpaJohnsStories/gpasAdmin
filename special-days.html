@@ -230,6 +230,20 @@ tr.story-row {
     border-bottom: 3px solid #4a90e2;
 }
 
+/* Tighten spacing in all table cells */
+td {
+    padding: 4px 10px;  /* 4px top/bottom, 10px left/right */
+}
+
+/* Even tighter for cells touching the blue line */
+tr:not(.story-row) td {
+    padding-bottom: 2px;  /* Less space BEFORE blue line */
+}
+
+tr.story-row td {
+    padding-top: 2px;  /* Less space AFTER blue line */
+}
+
 /* Past date styling - lighter gray */
 tr.past-date {
     background-color: #e8e8e8;
