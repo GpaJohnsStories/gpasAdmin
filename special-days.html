@@ -367,6 +367,9 @@ tr.past-date:hover {
     
     let specialDays = [];
     let editingRow = null;
+    let sortColumn = -1;
+    let sortAscending = true;
+
     
     // Load special days from Supabase on page load
     window.addEventListener('load', loadSpecialDays);
@@ -666,21 +669,29 @@ async function deleteRow(id) {
     
     // Sort table
     let sortDirection = {};
-    
+ ************************************   
 function sortTable(columnIndex) {
-    const table = document.getElementById("special-days-table");
-    const tbody = table.querySelector("tbody");
-    const rows = Array.from(tbody.querySelectorAll("tr"));
-    
-    // Group rows into pairs (main row + story row)
-    const rowPairs = [];
-    for (let i = 0; i < rows.length; i += 2) {
-        rowPairs.push({
-            mainRow: rows[i],
-            storyRow: rows[i + 1],
-            sortValue: rows[i].cells[columnIndex].textContent.trim()
-        });
+    // Toggle sort direction if clicking same column
+    if (sortColumn === columnIndex) {
+        sortAscending = !sortAscending;
+    } else {
+        sortColumn = columnIndex;
+        sortAscending = true;
     }
+    
+    // Update sort indicators
+    document.querySelectorAll('.sort-indicator').forEach(indicator => {
+        indicator.textContent = '↕';
+    });
+    const currentIndicator = document.querySelectorAll('th')[columnIndex].querySelector('.sort-indicator');
+    if (currentIndicator) {
+        currentIndicator.textContent = sortAscending ? '↑' : '↓';
+    }
+    
+    // Now do the actual sorting (simplified for now)
+    displaySpecialDays(); // This reloads and displays data
+}
+
     
     // Sort the pairs
     rowPairs.sort((a, b) => {
