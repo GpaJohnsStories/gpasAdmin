@@ -687,34 +687,30 @@ function sortTable(columnIndex) {
         currentIndicator.textContent = sortAscending ? '↑' : '↓';
     }
     
-    // Now do the actual sorting (simplified for now)
-    displaySpecialDays(); // This reloads and displays data
-}
-
-    
-    // Sort the pairs
-    rowPairs.sort((a, b) => {
-        let aVal = a.sortValue;
-        let bVal = b.sortValue;
+    // Actually sort the specialDays array
+    specialDays.sort((a, b) => {
+        let aVal, bVal;
         
-        // Handle dates
-        if (columnIndex === 2) { // Start Date column
-            aVal = new Date(aVal);
-            bVal = new Date(bVal);
+        // Map column index to data field
+        switch(columnIndex) {
+            case 0: aVal = a.country; bVal = b.country; break;
+            case 1: aVal = a.site; bVal = b.site; break;
+            case 2: aVal = a.start_date; bVal = b.start_date; break;
+            case 4: aVal = a.title; bVal = b.title; break;
+            case 6: aVal = a.text_code; bVal = b.text_code; break;
+            default: return 0;
         }
         
-        // Compare
-        if (aVal < bVal) return -1;
-        if (aVal > bVal) return 1;
+        // Compare values
+        if (aVal < bVal) return sortAscending ? -1 : 1;
+        if (aVal > bVal) return sortAscending ? 1 : -1;
         return 0;
     });
     
-    // Clear tbody and add sorted pairs back
-    tbody.innerHTML = "";
-    rowPairs.forEach(pair => {
-        tbody.appendChild(pair.mainRow);
-        tbody.appendChild(pair.storyRow);
-    });
+    // Redisplay with sorted data
+    displaySpecialDays();
+}
+
 
         
         // Clear and re-add rows
