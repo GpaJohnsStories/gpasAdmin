@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA'S LIB CONTROL</title>
+    <style>
+        /* Reset and Base Styles */
+        /* Add this to the existing styles */ 
+        .admin-menu-frame { width: 100%; 
+            height: 90px; 
+            border: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            z-index: 1000;
+            overflow: hidden;
+        } 
+    
+            body {font-family: Arial, sans-serif; 
+                background: linear-gradient(to bottom, #fef3c7, #fed7aa, #fef3c7); 
+                padding: 90px 10px 10px 10px; /* Updated padding */ 
+            }
+
+        /* Container Styles */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 8px 24px;
+            border-bottom: 2px solid #fed7aa;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            margin-bottom: 12px;
+        }
+
+        .header h1 {
+            color: #c2410c;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        /* Button Styles from your CSS */
+        .btn {
+            font-size: 21px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            padding: 8px 24px;
+            border-radius: 9999px;
+            border: 2px solid;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Orange Save Button */
+        .btn-orange {
+            background-color: #ea580c;
+            color: #ffffff;
+            border-color: #c2410c;
+        }
+
+        /* Red Cancel Button */
+        .btn-red {
+            background-color: #dc2626;
+            color: #ffffff;
+            border-color: #b91c1c;
+        }
+
+        /* Green Navigation Button */
+        .btn-green {
+            background-color: #16a34a;
+            color: #ffffff;
+            border-color: #15803d;
+        }
+
+        /* Brown Format Button */
+        .btn-brown {
+            background-color: #A0522D;
+            color: #ffffff;
+            border-color: #8B4513;
+        }
+
+        /* Form Section Styles */
+        .form-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            border: 2px solid;
+            padding: 16px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .section-green {
+            border-color: #86ef91;
+        }
+
+        .section-orange {
+            border-color: #fb923c;
+        }
+
+        /* Dot Indicators */
+        .dot-indicator {
+            position: absolute;
+            top: -16px;
+            left: -16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+            font-weight: bold;
+            z-index: 30;
+        }
+
+        .dot-red {
+            background-color: #DC143C;
+            color: #FFD700;
+        }
+
+        .dot-orange {
+            background-color: #FFA500;
+            color: #228B22;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 21px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            font-size: 21px;
+            font-family: Arial, sans-serif;
+            padding: 8px 12px;
+            border: 4px solid #fb923c;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #f97316;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 32px 1fr;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .form-row-label {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        /* Character Counter */
+        .char-counter {
+            font-size: 14px;
+            color: #666;
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        /* Rich Text Editor */
+        .editor-container {
+            border: 2px solid #86ef91;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .editor-toolbar {
+            background: #f3f4f6;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 8px;
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .editor-btn {
+            padding: 4px 8px;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .editor-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .editor-btn.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .editor-content {
+            min-height: 300px;
+            padding: 12px;
+            font-size: 18px;
+            line-height: 1.6;
+            overflow-y: auto;
+            max-height: 500px;
+        }
+
+        /* Grid Layouts */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 24px;
+        }
+
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-fields-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Voice Preview Grid */
+        .voice-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .voice-card {
+            border: 2px solid #86ef91;
+            border-radius: 4px;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .voice-name {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .voice-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .voice-buttons {
+            display: flex;
+            gap: 4px;
+        }
+
+        .voice-btn {
+            flex: 1;
+            padding: 4px 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Status Dropdown Styles */
+        .status-select {
+            width: 280px;
+            height: 40px;
+            font-size: 21px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            border: 2px solid;
+            border-radius: 4px;
+        }
+
+        /* Photo Upload Grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .photo-upload-box {
+            border: 2px dashed #fb923c;
+            border-radius: 4px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            margin-bottom: 16px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .modal-body {
+            margin-bottom: 24px;
+            font-size: 18px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        /* Site Badge */
+        .site-badge {
+            width: 140px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            border: 4px solid #fb923c;
+            font-size: 21px;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Instruction Box */
+        .instruction-box {
+            border: 2px solid #f97316;
+            border-radius: 4px;
+            padding: 4px 16px;
+            font-size: 18px;
+            font-family: 'Comic Sans MS', cursive, Arial;
+            font-weight: bold;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+    /* Add to your existing styles */
+.last-updates-grid {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.update-column {
+    text-align: center;
+}
+
+.update-label {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.update-date {
+    font-size: 18px;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.label-text { background-color: #fbbf24; }
+.label-audio { background-color: #ef4444; color: white; }
+.label-original { background-color: #93c5fd; }
+
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    
+ 
+    </style>
+</head>
+<body>
+    <!-- Admin Menu -->
+    <iframe src="../menu.html" class="admin-menu-frame" scrolling="no"></iframe>
+    
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>LIBRARY CONTROL</h1>
+            <div class="form-fields-row">
+                <button class="btn btn-orange" onclick="saveStory(false)">Save & Don't Clear</button>
+                <button class="btn btn-orange" onclick="saveStory(true)">Save & Clear</button>
+                <button class="btn btn-red" onclick="cancelAndClear()">Cancel ALL & Clear</button>
+                <button class="btn btn-green" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Go To Top</button>
+                <button class="btn btn-brown" onclick="scrollToEditor()">Format</button>
+            </div>
+        </div>
+
+     <!-- Publication Status Bar - width matched to text details box -->
+<!-- Replace the existing publication status and main grid with this: -->
+<div style="display: flex; gap: 24px; margin-bottom: 24px; align-items: flex-start;">
+    <!-- Left side: Publication Status -->
+    <div style="flex: 1;">
+        <div style="padding: 8px 16px; background: #228B22; border: 4px solid #f97316; border-radius: 8px; box-shadow: 4px 4px 0px #d97706;">
+            <span style="font-size: 24px; font-weight: bold; color: #FFD700; text-shadow: 2px 2px 0px #B8860B;">
+                Set Publication Status BEFORE Saving:
+            </span>
+            <select id="publicationStatus" class="status-select" onchange="updateStatusColor()">
+                <option value="0">0 - Save & Pub, App & Rev</option>
+                <option value="1">1 - Save & Pub, App Only</option>
+                <option value="2">2 - Save, NO PUB, No CoP</option>
+                <option value="3">3 - Save, NO Gpa APR</option>
+                <option value="4">4 - Save, Formatting</option>
+                <option value="5" selected>5 - NOT SAVED</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- Right side: Last Updates Grid -->
+    <div class="last-updates-grid" style="width: 400px;">
+        <div class="update-column">
+            <div class="update-label label-text">Last Text</div>
+            <div id="lastTextDate" class="update-date">--/--/-- --:--</div>
+        </div>
+        <div class="update-column">
+            <div class="update-label label-audio">Last Audio</div>
+            <div id="lastAudioDate" class="update-date">--/--/-- --:--</div>
+        </div>
+        <div class="update-column">
+            <div class="update-label label-original">Original</div>
+            <div id="lastOriginalDate" class="update-date">--/--/-- --:--</div>
+        </div>
+    </div>
+</div>
+
+<div class="form-section section-green">
+    <div class="dot-indicator dot-red">1</div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2 style="font-size: 24px; color: #15803d;">Text Details</h2>
+        <div class="instruction-box">
+            <span style="color: #DC143C;">Red dots = REQUIRED</span>
+            <span style="color: #999;">•</span>
+            <span style="color: #F97316;">Orange dots = OPTIONAL</span>
+        </div>
+    </div>
+
+    <table width="100%">
+        <tr>
+            <td width="45%" valign="top">
+                <!-- LEFT COLUMN -->
+                <!-- Row A: Text Code + Site Badge -->
+<div style="display: flex; align-items: center; gap: 10px;">
+    <div class="form-row-label" style="background-color: #DC143C; color: #FFD700;">A</div>
+    <input type="text" 
+           id="storyCode" 
+           placeholder="TEXT CODE" 
+           class="form-input" 
+           style="width: 140px; text-transform: uppercase; font-weight: bold;" 
+           maxlength="7" 
+           onkeyup="handleStoryCodeChange(this.value.toUpperCase())" 
+           onpaste="handlePaste(event)">
+    <span id="siteBadge" class="site-badge" style="background-color: #999;">No Site</span>
+</div>
+
+                
+                <!-- Category & Copyright dropdowns -->
+                <div style="margin-left: 40px; margin-bottom: 10px;">
+                    <select id="category" class="form-select" style="width: 260px; background-color: #F97316; color: white; font-weight: bold;">
+                        <option value="">Category</option>
+                        <option value="WebText">WebText</option>
+                        <option value="Fun">Fun</option>
+                        <option value="Life">Life</option>
+                        <option value="North Pole">North Pole</option>
+                        <option value="World Changers">World Changers</option>
+                        <option value="BioText">BioText</option>
+                    </select>
+                    
+                    <select id="copyrightStatus" class="form-select" style="width: 260px; background-color: #2563eb; color: white; font-weight: bold;">
+                        <option value="">Copyright Status</option>
+                        <option value="©">© - Full Copyright</option>
+                        <option value="L">L — Limited Use</option>
+                        <option value="O">O — Open Unlimited</option>
+                    </select>
+                </div>
+
+                <!-- Row B: Title -->
+                <div class="form-row">
+                    <div class="form-row-label" style="background-color: #DC143C; color: #FFD700;">B</div>
+                    <textarea id="title" placeholder="Story Title" class="form-textarea" rows="1" maxlength="120" onkeyup="updateCharCount('title', 120)"></textarea>
+                    <div id="titleCount" class="char-counter">0 / 120</div>
+                </div>
+
+                <!-- Row D: Tagline -->
+                <div class="form-row">
+                    <div class="form-row-label" style="background-color: #FFA500; color: #228B22;">D</div>
+                    <textarea id="tagline" placeholder="Story Tagline" class="form-textarea" rows="1" maxlength="120" onkeyup="updateCharCount('tagline', 120)"></textarea>
+                    <div id="taglineCount" class="char-counter">0 / 120</div>
+                </div>
+            </td>
+            
+            <td width="45%" valign="top">
+                <!-- RIGHT COLUMN -->
+                <!-- Row E: Author -->
+                 <select id="author" class="form-select" onchange="handleAuthorChange()" style="border-color: #fbbf24;">
+    <option value="">Loading authors...</option>
+</select>
+
+                <div class="form-row">
+                    <div class="form-row-label" style="background-color: #FFA500; color: #228B22;">E</div>
+                    <span style="font-size: 21px; font-weight: bold;">Author:</span>
+                    <input type="text" id="author" class="form-input" style="border-color: #fbbf24;">
+                </div>
+
+                <!-- Row F: Excerpt (takes up rest of space) -->
+                <div class="form-row">
+                    <div class="form-row-label" style="background-color: #FFA500; color: #228B22;">F</div>
+                    <textarea id="excerpt" placeholder="Story Excerpt" class="form-textarea" rows="5" maxlength="250" onkeyup="updateCharCount('excerpt', 250)"></textarea>
+                    <div id="excerptCount" class="char-counter">0 / 250</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+
+
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle" class="modal-title">Confirm Save</h3>
+            </div>
+            <div id="modalBody" class="modal-body">
+                Are you sure you want to save this story?
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-red" onclick="closeModal()">NO</button>
+                <button class="btn btn-green" onclick="confirmAction()">YES</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize
+        let currentStory = {};
+        let pendingAction = null;
+        let selectedSite = '';
+
+        // Listen for site selection from parent
+// Simple site loading on startup
+window.onload = function() {
+    selectedSite = localStorage.getItem('selectedSite') || '';
+    updateSiteBadge(selectedSite);
+    updateStatusColor();
+    
+    // Your existing draft check can go here too
+};
+
+        // Check localStorage on load
+        window.onload = function() {
+            selectedSite = localStorage.getItem('selectedSite') || '';
+            updateSiteBadge(selectedSite);
+            updateStatusColor();
+        };
+
+        function updateSiteBadge(site) {
+            const badge = document.getElementById('siteBadge');
+            if (site === 'KIDS') {
+                badge.style.backgroundColor = '#f97316';
+                badge.textContent = 'KIDS';
+            } else if (site === 'FAITH') {
+                badge.style.backgroundColor = '#228b22';
+                badge.textContent = 'FAITH';
+            } else if (site === 'SHOP') {
+                badge.style.backgroundColor = '#a0522d';
+                badge.textContent = 'SHOP';
+            } else {
+                badge.style.backgroundColor = '#999';
+                badge.textContent = 'No Site';
+            }
+        }
+
+        // Story Code handling
+        function handleStoryCodeChange(value) {
+            const input = document.getElementById('storyCode');
+            input.value = value.toUpperCase();
+            
+            if (value.length === 7) {
+                if (value.charAt(3) !== '-') {
+                    alert('Invalid story code format. 4th position must be a dash (e.g., ABC-123)');
+                    return;
+                }
+                // Would normally do lookup here
+                console.log('Valid story code:', value);
+            }
+        }
+
+        function handlePaste(event) {
+            event.preventDefault();
+            const pastedText = event.clipboardData.getData('text').toUpperCase();
+            document.getElementById('storyCode').value = pastedText;
+            handleStoryCodeChange(pastedText);
+        }
+
+             // Character counting
+        function updateCharCount(fieldId, maxLength) {
+            const field = document.getElementById(fieldId);
+            const count = document.getElementById(fieldId + 'Count');
+            const length = field.value.length;
+            count.textContent = length + ' / ' + maxLength;
+            count.style.color = length > maxLength * 0.9 ? '#dc2626' : '#666';
+        }
+
+        function updatePhotoPreview(photoNum) {
+    const input = document.getElementById('photo' + photoNum);
+    const preview = document.getElementById('preview' + photoNum);
+    
+    if (input.value) {
+        preview.src = input.value;
+        preview.style.display = 'block';
+        preview.onerror = function() {
+            preview.style.display = 'none';
+            showNotification('Invalid image URL for Photo ' + photoNum);
+        };
+    } else {
+        preview.style.display = 'none';
+    }
+}
+
+        // Editor functions
+        function formatText(command) {
+            const editor = document.getElementById('editor');
+            const selection = window.getSelection();
+            
+            if (!selection.rangeCount) return;
+            
+            switch(command) {
+                case 'bold':
+                    document.execCommand('bold');
+                    break;
+                case 'italic':
+                    document.execCommand('italic');
+                    break;
+                case 'underline':
+                    document.execCommand('underline');
+                    break;
+                case 'strikethrough':
+                    document.execCommand('strikeThrough');
+                    break;
+                case 'h1':
+                    document.execCommand('formatBlock', false, '<h1>');
+                    break;
+                case 'h2':
+                    document.execCommand('formatBlock', false, '<h2>');
+                    break;
+                case 'h3':
+                    document.execCommand('formatBlock', false, '<h3>');
+                    break;
+                case 'blockquote':
+                    document.execCommand('formatBlock', false, '<blockquote>');
+                    break;
+                case 'ul':
+                    document.execCommand('insertUnorderedList');
+                    break;
+                case 'ol':
+                    document.execCommand('insertOrderedList');
+                    break;
+                case 'clear':
+                    document.execCommand('removeFormat');
+                    break;
+                case 'link':
+                    const url = prompt('Enter URL:');
+                    if (url) document.execCommand('createLink', false, url);
+                    break;
+            }
+            editor.focus();
+        }
+
+        function updateContent() {
+            const editor = document.getElementById('editor');
+            currentStory.content = editor.innerHTML;
+        }
+
+        // Voice functions
+        function selectVoice(voiceName) {
+            document.getElementById('currentVoice').textContent = voiceName;
+            currentStory.voice = voiceName;
+            showNotification('Selected ' + voiceName + ' voice');
+        }
+
+        function testVoice(voice) {
+            showNotification('Voice preview would play here: ' + voice);
+        }
+
+        // Save functions
+        function saveStory(clearAfter) {
+            const storyCode = document.getElementById('storyCode').value;
+            if (!storyCode.trim()) {
+                alert('Please enter a text code before saving.');
+                return;
+            }
+            
+            pendingAction = clearAfter ? 'save-and-clear' : 'save-only';
+            showModal('Confirm Save', 'Are you sure you want to save this story?');
+        }
+
+        function cancelAndClear() {
+            pendingAction = 'cancel-all';
+            showModal('Confirm Cancel All & Clear', 
+                'Are you sure you want to CANCEL ALL EDITS<br>and CLEAR the form? All unsaved changes will be lost!');
+        }
+
+        function confirmAction() {
+            closeModal();
+            
+            if (pendingAction === 'cancel-all') {
+                clearForm();
+                showNotification('Form cleared!');
+            } else {
+                // Gather all form data
+                gatherFormData();
+                
+                // Save to localStorage
+                const stories = JSON.parse(localStorage.getItem('stories') || '{}');
+                stories[currentStory.storyCode] = currentStory;
+                localStorage.setItem('stories', JSON.stringify(stories));
+                
+                showNotification('Story saved successfully!');
+                
+                if (pendingAction === 'save-and-clear') {
+                    setTimeout(clearForm, 500);
+                }
+            }
+        }
+
+        function gatherFormData() {
+            currentStory = {
+                storyCode: document.getElementById('storyCode').value,
+                site: selectedSite,
+                category: document.getElementById('category').value,
+                copyrightStatus: document.getElementById('copyrightStatus').value,
+                title: document.getElementById('title').value,
+                tagline: document.getElementById('tagline').value,
+                author: document.getElementById('author').value,
+                excerpt: document.getElementById('excerpt').value,
+                content: document.getElementById('editor').innerHTML,
+                publicationStatus: document.getElementById('publicationStatus').value,
+                voice: document.getElementById('currentVoice').textContent,
+                photos: {
+                    photo1: document.getElementById('photo1').value,
+                    photo2: document.getElementById('photo2').value,
+                    photo3: document.getElementById('photo3').value,
+                    photo4: document.getElementById('photo4').value,
+                    alt1: document.getElementById('alt1').value,
+                    alt2: document.getElementById('alt2').value,
+                    alt3: document.getElementById('alt3').value,
+                    alt4: document.getElementById('alt4').value
+                },
+                savedAt: new Date().toISOString()
+            };
+        }
+
+        function clearForm() {
+            document.getElementById('storyCode').value = '';
+            document.getElementById('category').value = '';
+            document.getElementById('copyrightStatus').value = '';
+            document.getElementById('title').value = '';
+            document.getElementById('tagline').value = '';
+            document.getElementById('author').value = '';
+            document.getElementById('excerpt').value = '';
+            document.getElementById('editor').innerHTML = '';
+            document.getElementById('publicationStatus').value = '5';
+            document.getElementById('currentVoice').textContent = 'Nova';
+            
+            // Clear photos
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById('photo' + i).value = '';
+                document.getElementById('alt' + i).value = '';
+            }
+            
+            // Update character counts
+            updateCharCount('title', 120);
+            updateCharCount('tagline', 120);
+            updateCharCount('excerpt', 250);
+            updateStatusColor();
+        }
+
+        // Modal functions
+        function showModal(title, body) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalBody').innerHTML = body;
+            document.getElementById('confirmModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+        }
+
+        // Status color update
+        function updateStatusColor() {
+            const select = document.getElementById('publicationStatus');
+            const value = select.value;
+            
+            switch(value) {
+                case '0':
+                    select.style.backgroundColor = '#228B22';
+                    select.style.color = 'white';
+                    break;
+                case '1':
+                    select.style.backgroundColor = '#10b981';
+                    select.style.color = 'white';
+                    break;
+                case '2':
+                    select.style.backgroundColor = '#FFD700';
+                    select.style.color = '#228B22';
+                    break;
+                case '3':
+                    select.style.backgroundColor = '#3b82f6';
+                    select.style.color = 'white';
+                    break;
+                case '4':
+                    select.style.backgroundColor = '#9c441a';
+                    select.style.color = 'white';
+                    break;
+                case '5':
+                    select.style.backgroundColor = '#DC143C';
+                    select.style.color = '#FFD700';
+                    break;
+            }
+        }
+
+        // Utility functions
+        function scrollToEditor() {
+            document.getElementById('editorSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function showNotification(message) {
+            // Simple notification - in production you'd use a toast library
+            const div = document.createElement('div');
+            div.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #16a34a; color: white; padding: 12px 24px; border-radius: 4px; font-size: 18px; z-index: 200; animation: slideIn 0.3s ease';
+            div.textContent = message;
+            document.body.appendChild(div);
+            
+            setTimeout(() => {
+                div.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => div.remove(), 300);
+            }, 3000);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 's':
+                        e.preventDefault();
+                        saveStory(false);
+                        break;
+                    case 'b':
+                        if (document.getElementById('editor').contains(document.activeElement)) {
+                            e.preventDefault();
+                            formatText('bold');
+                        }
+                        break;
+                    case 'i':
+                        if (document.getElementById('editor').contains(document.activeElement)) {
+                            e.preventDefault();
+                            formatText('italic');
+                        }
+                        break;
+                }
+            }
+        });
+
+        // Load saved stories on startup
+        function loadStoriesList() {
+            const stories = JSON.parse(localStorage.getItem('stories') || '{}');
+            console.log('Saved stories:', Object.keys(stories));
+        }
+
+        // Export/Import functions for backup
+        function exportStories() {
+            const stories = localStorage.getItem('stories') || '{}';
+            const blob = new Blob([stories], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'super-text-backup-' + new Date().toISOString().split('T')[0] + '.json';
+            a.click();
+        }
+
+        function importStories() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        try {
+                            const data = JSON.parse(event.target.result);
+                            localStorage.setItem('stories', JSON.stringify(data));
+                            showNotification('Stories imported successfully!');
+                        } catch (err) {
+                            alert('Invalid backup file');
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        }
+
+        // Auto-save draft
+        setInterval(function() {
+            if (document.getElementById('storyCode').value) {
+                gatherFormData();
+                localStorage.setItem('draft', JSON.stringify(currentStory));
+            }
+        }, 30000); // Every 30 seconds
+
+        // Load draft on startup
+        window.addEventListener('DOMContentLoaded', function() {
+            const draft = localStorage.getItem('draft');
+            if (draft) {
+                const shouldLoad = confirm('Found unsaved draft. Would you like to restore it?');
+                if (shouldLoad) {
+                    const data = JSON.parse(draft);
+                    // Restore all fields
+                    document.getElementById('storyCode').value = data.storyCode || '';
+                    document.getElementById('category').value = data.category || '';
+                    document.getElementById('copyrightStatus').value = data.copyrightStatus || '';
+                    document.getElementById('title').value = data.title || '';
+                    document.getElementById('tagline').value = data.tagline || '';
+                    document.getElementById('author').value = data.author || '';
+                    document.getElementById('excerpt').value = data.excerpt || '';
+                    document.getElementById('editor').innerHTML = data.content || '';
+                    document.getElementById('publicationStatus').value = data.publicationStatus || '5';
+                    document.getElementById('currentVoice').textContent = data.voice || 'Nova';
+                    
+                    // Update character counts
+                    updateCharCount('title', 120);
+                    updateCharCount('tagline', 120);
+                    updateCharCount('excerpt', 250);
+                    updateStatusColor();
+                    
+                    showNotification('Draft restored!');
+                }
+            }
+        });
+                // Auto-save draft
+        setInterval(function() {
+            if (document.getElementById('storyCode').value) {
+                gatherFormData();
+                localStorage.setItem('draft', JSON.stringify(currentStory));
+            }
+        }, 30000); // Every 30 seconds
+
+        // ADD THE NEW DATE FUNCTIONS HERE:
+        function formatDateForGrid(dateString) {
+            if (!dateString) return '--/--/-- --:--';
+            const date = new Date(dateString);
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const year = String(date.getFullYear()).substr(-2);
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            return `${month}/${day}/${year} ${hours}:${minutes}`;
+        }
+
+        function updateLastDates(story) {
+            document.getElementById('lastTextDate').textContent = formatDateForGrid(story.updated_at);
+            document.getElementById('lastAudioDate').textContent = formatDateForGrid(story.audio_generated_at);
+            document.getElementById('lastOriginalDate').textContent = formatDateForGrid(story.created_at);
+        }
+
+        // Load draft on startup
+        window.addEventListener('DOMContentLoaded', function() {
+            const draft = localStorage.getItem('draft');
+            if (draft) {
+                const shouldLoad = confirm('Found unsaved draft. Would you like to restore it?');
+                if (shouldLoad) {
+                    const data = JSON.parse(draft);
+                    // Restore all fields
+                    document.getElementById('storyCode').value = data.storyCode || '';
+                    document.getElementById('category').value = data.category || '';
+                    document.getElementById('copyrightStatus').value = data.copyrightStatus || '';
+                    document.getElementById('title').value = data.title || '';
+                    document.getElementById('tagline').value = data.tagline || '';
+                    document.getElementById('author').value = data.author || '';
+                    document.getElementById('excerpt').value = data.excerpt || '';
+                    document.getElementById('editor').innerHTML = data.content || '';
+                    document.getElementById('publicationStatus').value = data.publicationStatus || '5';
+                    document.getElementById('currentVoice').textContent = data.voice || 'Nova';
+                    
+                    // Update character counts
+                    updateCharCount('title', 120);
+                    updateCharCount('tagline', 120);
+                    updateCharCount('excerpt', 250);
+                    updateStatusColor();
+                    
+                    showNotification('Draft restored!');
+                }
+            }
+        });
+
+// Load authors on page init
+async function loadAuthors() {
+    const authorSelect = document.getElementById('author');
+    
+    try {
+        const { data, error } = await supabase
+            .from('stories')
+            .select('author')
+            .not('author', 'is', null)
+            .order('author');
+            
+        if (error) throw error;
+        
+        // Get unique authors
+        const uniqueAuthors = [...new Set(data.map(s => s.author?.trim()).filter(Boolean))].sort();
+        
+        // Clear and rebuild select
+        authorSelect.innerHTML = '<option value="">Select Author</option>';
+        uniqueAuthors.forEach(author => {
+            const option = document.createElement('option');
+            option.value = author;
+            option.textContent = author;
+            authorSelect.appendChild(option);
+        });
+        
+        // Add "Add New Author..." option
+        const addNewOption = document.createElement('option');
+        addNewOption.value = '__ADD_NEW__';
+        addNewOption.textContent = '+ Add New Author...';
+        addNewOption.style.fontWeight = 'bold';
+        authorSelect.appendChild(addNewOption);
+        
+    } catch (error) {
+        console.error('Error loading authors:', error);
+    }
+}
+
+// Handle author selection
+function handleAuthorChange() {
+    const select = document.getElementById('author');
+    
+    if (select.value === '__ADD_NEW__') {
+        const newAuthor = prompt('Enter new author name (minimum 4 characters):');
+        
+        if (newAuthor && newAuthor.trim().length >= 4) {
+            const trimmed = newAuthor.trim();
+            
+            // Check if already exists
+            const exists = Array.from(select.options).some(opt => 
+                opt.value.toLowerCase() === trimmed.toLowerCase()
+            );
+            
+            if (exists) {
+                alert('This author already exists!');
+                select.value = '';
+            } else {
+                // Add new option before the "Add New" option
+                const newOption = document.createElement('option');
+                newOption.value = trimmed;
+                newOption.textContent = trimmed;
+                select.insertBefore(newOption, select.lastElementChild);
+                select.value = trimmed;
+            }
+        } else {
+            select.value = '';
+            if (newAuthor) alert('Author name must be at least 4 characters!');
+        }
+    }
+}
+
+// Add to your init function
+window.addEventListener('DOMContentLoaded', async () => {
+    await loadAuthors();
+    // ... rest of your init code
+});
+
+// Initialize on page load
+loadAuthors();
+
+
+</script>
+</body>
+</html>
+                         

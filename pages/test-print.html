@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gpas Test Print</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            word-break: break-all;
+        }
+        a {
+            color: #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gpas Test Print</h1>
+    <button onclick="requestPrint()">Print Story</button>
+    <div id="result"></div>
+
+    <script>
+        function requestPrint() {
+            // Get story code
+            const storyCode = prompt("Enter Story Code:");
+            if (!storyCode) return;
+            
+            // Get copyright code
+            const copyrightCode = prompt("Enter Copyright Code (O or L):");
+            if (!copyrightCode) return;
+            
+            // Send to appropriate print module
+            if (copyrightCode.toUpperCase() === "O") {
+                // Build URL - only send story code
+                const printUrl = `https://gpaskids.com/superPrint-O.html?story=${encodeURIComponent(storyCode)}`;
+                
+                // Try to open in new window
+                const newWindow = window.open(printUrl, '_blank');
+                
+                // If blocked, show link
+                if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+                    document.getElementById('result').innerHTML = 
+                        `<strong>Popup blocked!</strong><br>
+                         Click here to open print page:<br>
+                         <a href="${printUrl}" target="_blank">${printUrl}</a>`;
+                }
+            } else {
+                alert("Only 'O' copyright code supported for now. L coming soon!");
+            }
+        }
+    </script>
+</body>
+</html>

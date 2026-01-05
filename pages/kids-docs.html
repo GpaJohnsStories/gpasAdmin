@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIDS Color Presets</title>
+    <style>
+        /* Google Fonts for Kalam, Lexend */
+        @import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Lexend:wght@400&display=swap');
+        
+        /* Box container styling */
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            border: 4px solid #333; /* 4px box border */
+            box-sizing: border-box;
+        }
+        
+        /* Table styling - minimal padding, 4px border */
+        table {
+            border-collapse: collapse;
+            border: 4px solid #333; /* 4px table border */
+            margin: 0; /* Aligned to left border of box */
+        }
+        
+        /* All cells get 2px borders and minimal padding */
+        th, td {
+            border: 2px solid #666; /* 2px inside table cell borders */
+            padding: 4px; /* Minimal padding */
+            text-align: center;
+        }
+        
+        /* Header row styling */
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        
+        /* Sample box cell - spans 2 rows */
+        .sample-cell {
+            width: 100px;
+            height: 50px;
+            vertical-align: middle;
+        }
+        
+        /* Preset number styling */
+        .preset-number {
+            font-family: 'Kalam', cursive;
+            font-size: 1.17em; /* h3 equivalent */
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        /* Sample box inside the cell */
+        .sample-box {
+            width: 100px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main color preset table for KIDS site -->
+    <table>
+        <!-- Header row -->
+        <thead>
+            <tr>
+                <th>Sample</th>
+                <th>Preset</th>
+                <th>Border Color</th>
+                <th>Photo Border</th>
+                <th>Background</th>
+                <th>Font</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Preset 1 -->
+            <tr>
+                <!-- Sample box - rowspan 2 to merge both rows -->
+                <td rowspan="2" class="sample-cell">
+                    <div class="sample-box" style="border: 4px solid #FF6B35; background-color: #FFE5B4; font-family: 'Kalam', cursive; color: #2C3E50;">
+                        ABC abc 123
+                    </div>
+                </td>
+                <!-- Preset number -->
+                <td><h3 class="preset-number">1</h3></td>
+                <!-- Color names - to be filled by admin -->
+                <td>Orange - Rust</td>
+                <td>Orange - Rust</td>
+                <td>Peach - Light</td>
+                <td>Kalam</td>
+            </tr>
+            <tr>
+                <!-- Description -->
+                <td style="font-size: 0.9em;">Dark on Peach</td>
+                <!-- Hex codes -->
+                <td>#FF6B35</td>
+                <td>#FF6B35</td>
+                <td>#FFE5B4</td>
+                <td>#2C3E50</td>
+            </tr>
+            
+            <!-- Preset 2 -->
+            <tr>
+                <td rowspan="2" class="sample-cell">
+                    <div class="sample-box" style="border: 4px solid #4A90E2; background-color: #E8F4FD; font-family: 'Lexend', sans-serif; color: #1A5490;">
+                        ABC abc 123
+                    </div>
+                </td>
+                <td><h3 class="preset-number">2</h3></td>
+                <td>Blue - Sky</td>
+                <td>Blue - Sky</td>
+                <td>Blue - Ice</td>
+                <td>Lexend</td>
+            </tr>
+            <tr>
+                <td style="font-size: 0.9em;">Blue on Ice</td>
+                <td>#4A90E2</td>
+                <td>#4A90E2</td>
+                <td>#E8F4FD</td>
+                <td>#1A5490</td>
+            </tr>
+            
+            <!-- Presets 3-9 follow same pattern - showing empty template -->
+            <!-- Preset 3 -->
+            <tr>
+                <td rowspan="2" class="sample-cell">
+                    <div class="sample-box" style="border: 4px solid #000; background-color: #FFF; font-family: Georgia, serif; color: #000;">
+                        ABC abc 123
+                    </div>
+                </td>
+                <td><h3 class="preset-number">3</h3></td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Georgia</td>
+            </tr>
+            <tr>
+                <td style="font-size: 0.9em;">-</td>
+                <td>#000000</td>
+                <td>#000000</td>
+                <td>#FFFFFF</td>
+                <td>#000000</td>
+            </tr>
+            
+            <!-- Remaining presets 4-9 would follow same structure -->
+            <!-- Showing just the structure for brevity -->
+        </tbody>
+    </table>
+</body>
+</html>
