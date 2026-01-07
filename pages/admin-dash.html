@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  /* Confirm Valid Login */
+  <script>
+    const token = sessionStorage.getItem("githubToken");
+    if (!token) window.location.href = "../index.html";
+  </script>
+
   <meta charset="UTF-8">
   <title>Admin Dashboard</title>
   <style>
@@ -167,10 +173,3 @@ document.getElementById("adminMenuFrame").src =
 
 </body>
 </html>
-
-
-
-
-
-
-
