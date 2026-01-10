@@ -162,7 +162,7 @@
   </script>
 
   <!-- PAGE TITLE -->
-  <h2 style="text-align:center;">GPAS Shop Product Formatter -- 01/10 - 9</h2>
+  <h2 style="text-align:center;">GPAS Shop Product Formatter -- 01/10 - 10</h2>
 
   <!-- 
     MAIN 3-COLUMN TABLE 
@@ -201,28 +201,34 @@
 
 
   <h3>Build Product Code</h3>
- <!-- 2 Dropdown Boxes on Same Line -->
-<div style="display:flex; gap:20px; align-items:flex-start;">
-	
+<!-- 2 Dropdown Boxes on Same Line -->
+<div style="display:flex; gap:20px;">
+
   <!-- INTEREST -->
-  <label>Interest:</label><br>
-  <select id="interest">
-    <option value="" selected></option>
-    <option value="F">FAITH</option>
-    <option value="U">FUN</option>
-    <option value="A">ALL</option>
-  </select>
+  <div>
+    <label>Interest:</label><br>
+    <select id="interest" style="width:150px;">
+      <option value="" selected></option>
+      <option value="F">FAITH</option>
+      <option value="U">FUN</option>
+      <option value="A">ALL</option>
+    </select>
+  </div>
 
   <!-- PRODUCT TYPE -->
-  <label>Product Type:</label><br>
-  <select id="ptype">
-    <option value="" selected></option>
-    <option value="T">T‑SHIRTS</option>
-    <option value="B">BOOKS & BIBLES</option>
-    <option value="O">OTHER STUFF</option>
-   <option value="E">EVERYTHING</option>
-  </select>
+  <div>
+    <label>Product Type:</label><br>
+    <select id="ptype" style="width:150px;">
+      <option value="" selected></option>
+      <option value="T">T‑SHIRTS</option>
+      <option value="B">BOOKS & BIBLES</option>
+      <option value="O">OTHER STUFF</option>
+      <option value="E">EVERYTHING</option>
+    </select>
   </div>
+
+</div>
+
 
   <!-- TAGS MOVED HERE -->
   <label>Search Tags (comma separated ", "):</label><br>
@@ -704,6 +710,7 @@ async function saveProductFile() {
 
 </body>
 </html>
+
 
 
 
