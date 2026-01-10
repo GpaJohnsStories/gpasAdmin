@@ -180,15 +180,18 @@
 <td>
 
   <!-- TOP CONTROL BUTTONS -->
-  <div style="margin-bottom:20px;">
+<div class="inline-buttons" style="margin-top:20px;">
+  <button id="saveBtn" style="background-color:#228B22; color:white;">width:160px;
+	  SAVE LISTING</button>
+  <button id="saveClearBtn" style="background-color:#cc0000; color:white;">width:160px;
+	  <strong>SAVE & CLEAR</strong></button>
+</div>
+
+	<div style="margin-bottom:20px;">
     <button id="loadBtn">LOAD PRODUCT</button>
     <button id="clearBtn"><strong>CLEAR FORM</strong></button>
   </div>
 
-<div class="inline-buttons" style="margin-top:20px;">
-  <button id="saveBtn" style="background-color:#228B22; color:white;">SAVE LISTING</button>
-  <button id="saveClearBtn" style="background-color:#cc0000; color:white;"><strong>SAVE & CLEAR</strong></button>
-</div>
 
 <div style="margin-top:10px;">
   <button id="deleteBtn" style="background-color:#cc0000; color:white;"><strong>DELETE LISTING</strong></button>
@@ -635,6 +638,7 @@ async function saveProductFile() {
 
 </body>
 </html>
+
 
 
 
