@@ -96,7 +96,7 @@
 
 /* PRODUCT CARD PREVIEW WIDTH CONTROL */
 #previewBox {
-  width: 300px;        /* exact public card width */
+  width: 328px;        /* Fits 300px wide public card */
   max-width: 300px;
   height: 420px;       /* exact public card height */
   overflow: auto;
@@ -157,13 +157,6 @@
   margin: 4px 0;
 }
 
-.product-code {
-  font-weight: bold;
-}
-.product-price {
-  font-weight: bold;
-  text-align: right;
-}
 /* Make product description regular and NOT bold */
 .product-description {
   font-weight: normal;
@@ -564,15 +557,41 @@ function detectStoreName(url) {
      - Updates preview and window.finalProductHTML (for saving).
   ================================================================= */
   function formatListing() {
-    // 1) Grab all field values
-    const code    = (document.getElementById("pcode").value || "").trim();
-    const title   = (document.getElementById("title").value || "").trim();
-    const author  = (document.getElementById("author").value || "").trim();
-    const cost    = (document.getElementById("cost").value || "").trim();
-    const desc    = (document.getElementById("desc").value || "").trim();
-    const tagsRaw = (document.getElementById("tags").value || "").trim();
-    const purl    = (document.getElementById("purl").value || "").trim();
-    const imgurl  = (document.getElementById("imgurl").value || "").trim();
+
+  // ---------------------------------------------------------------
+  // REQUIRED FIELD GUARDS (HARD STOP)
+  // ---------------------------------------------------------------
+  const title  = document.getElementById("title").value.trim();
+  const imgurl = document.getElementById("imgurl").value.trim();
+  const purl   = document.getElementById("productUrl").value.trim();
+
+  if (!title) {
+    alert("ERROR: Product title is required.");
+    return;
+  }
+
+  if (!imgurl) {
+    alert("ERROR: Product image URL is required.");
+    return;
+  }
+
+  if (!purl) {
+    alert("ERROR: Product URL is required.");
+    return;
+  }
+
+  // ---------------------------------------------------------------
+  // 1) Grab remaining OPTIONAL field values
+  // ---------------------------------------------------------------
+  const code   = (document.getElementById("pcode").value || "").trim();
+  const author = (document.getElementById("author").value || "").trim();
+  const cost   = (document.getElementById("cost").value || "").trim();
+  const desc   = (document.getElementById("desc").value || "").trim();
+  const tagsRaw   = (document.getElementById("tags").value || "").trim();
+
+  // title, imgurl, purl are already available and valid
+  // ... continue building HTML ...
+}
 
 // 2) Build cost HTML (hide if blank or zero)
 let costHTML = "";
@@ -598,37 +617,67 @@ if (cost && !isNaN(cost) && Number(cost) > 0) {
 
     // 5) Build card HTML (this is what the shop page will use)
     //    Adjust structure and classes to match your live product wall.
-    const cardHTML =
-      "<article class='product-card' data-code='" + code + "' data-tags=\"" + escapeHtml(tagsDisplay) + "\">" +
-        "<div class='product-image-wrapper'>" +
-          (imgurl
-            ? "<a href='" + encodeURI(purl || "#") + "'>" +
-                "<img src='" + encodeURI(imgurl) + "' alt='" + escapeHtml(title) + "' class='product-image'>" +
-              "</a>"
-            : "") +
-        "</div>" +
-        "<div class='product-info'>" +
-          "<h3 class='product-title'>" + escapeHtml(title) + "</h3>" +
-          (author
-            ? "<div class='product-author'>" + escapeHtml(author) + "</div>"
-            : "") +
-          "<div class='product-code-price-row'>" +
-            "<span class='product-code'>" + escapeHtml(code) + "</span>" +
-            "<span class='product-price'>" + priceDisplay + "</span>" +
-          "</div>" +
-          (desc
-            ? "<p style='font-family:Lexend; font-size:21px; font-weight:normal; line-height:34px; margin:10px 0;'>" 
-            + escapeHtml(desc) + 
-              "</p>"
-            : "") +
-          (purl
-            ? "<div class='product-link'><a href='" + encodeURI(purl) + "'>View details</a></div>"
-            : "") +
-          (tagsDisplay
-            ? "<div class='product-tags'>Tags: " + escapeHtml(tagsDisplay) + "</div>"
-            : "") +
-        "</div>" +
-      "</article>";
+    // other border colors: #999 Medium Gray, #aaa Light-Medium Gray,
+    // #bbb between #aaa and #ccc, #888 dark-medium gray
+
+const cardHTML =
+  "<article style='width:300px; border:4px solid #999; padding:10px; box-sizing:border-box;'>" +
+    "<div style='text-align:center;'>" +
+      (imgurl
+        ? "<a href='" + encodeURI(purl || "#") + "'>" +
+            "<img src='" + encodeURI(imgurl) + "' alt='" + escapeHtml(title) + "' style='width:100%; height:auto; border:0;'>" +
+          "</a>"
+        : "") +
+    "</div>" +
+    "<h3 style='font-family:Lexend; font-size:24px; font-weight:bold; text-align:center; margin:10px 0 5px 0;'>" +
+      escapeHtml(title) +
+    "</h3>" +
+    (author
+      ? "<div style='font-family:Lexend; font-size:21px; font-weight:bold; text-align:center; margin-bottom:8px;'>" +
+          escapeHtml(author) +
+        "</div>"
+      : "") +
+    "<div style='font-family:Lexend; font-size:21px; margin:10px 0; display:flex; justify-content:space-between;'>" +
+      "<span><b>" + escapeHtml(code) + "</b></span>" +
+      "<span><b>" + priceDisplay + "</b></span>" +
+    "</div>" +
+    (desc
+      ? "<p style='font-family:Lexend; font-size:21px; line-height:26px; margin:10px 0;'>" +
+          escapeHtml(desc) +
+        "</p>"
+      : "") +
+/* ===============================================================
+   CREATE BUTTON FOR ONLINE STORE
+   - Displays a pill‑shaped 3D button linking to the product page
+   - Automatically includes detected store name (Amazon, Zazzle, etc.)
+================================================================= */
+
+(purl
+  ? "<div style='margin:14px 0; text-align:center;'>" +
+      "<a href='" + encodeURI(purl) + "' " +
+         "style='display:inline-block; " +
+                "padding:10px 22px; " +
+                "font-family:Lexend; " +
+                "font-size:20px; " +
+                "font-weight:bold; " +
+                "color:#000; " +
+                "background:#f2f2f2; " +
+                "border:2px solid #888; " +
+                "border-radius:999px; " +
+                "box-shadow:0 3px 0 #666; " +
+                "text-decoration:none;'>" +
+        "View Details" +
+        (storeName ? " at " + storeName + ".com" : "") +
+      "</a>" +
+    "</div>"
+  : "")
+
+    (tagsDisplay
+      ? "<div style='font-family:Lexend; font-size:18px; color:#666; margin-top:10px;'>Tags: " +
+          escapeHtml(tagsDisplay) +
+        "</div>"
+      : "") +
+  "</article>";
 
     // 6) Store in global for saving
     window.finalProductHTML = cardHTML;
@@ -855,9 +904,16 @@ if (cost && !isNaN(cost) && Number(cost) > 0) {
     const now = new Date().toISOString();
     const timestampComment = "<!-- Saved: " + now + " -->\n";
 
-    const rawPrice = (document.getElementById("cost").value || "").trim();
-    const priceComment =
-      "<!-- Price: " + formatPrice(rawPrice) + " -->\n";
+const rawPrice = (document.getElementById("cost").value || "").trim();
+
+      let priceComment = "";
+      let priceDisplay = "";
+
+// Only treat price as real if > 0
+if (rawPrice && !isNaN(rawPrice) && Number(rawPrice) > 0) {
+  priceDisplay = formatPrice(rawPrice);
+  priceComment = "<!-- Price: " + priceDisplay + " -->\n";
+}
 
     const fileContent =
       "<!DOCTYPE html>\n<html>\n<head>\n" +
