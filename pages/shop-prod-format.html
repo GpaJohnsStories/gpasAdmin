@@ -96,7 +96,7 @@
 
 /* PRODUCT CARD PREVIEW WIDTH CONTROL */
 #previewBox {
-  width: 328px;        /* Fits 300px wide public card */
+  width: 310px;        /* Fits 300px wide public card */
   max-width: 300px;
   height: 420px;       /* exact public card height */
   overflow: auto;
@@ -196,7 +196,7 @@
   </script>
 
   <!-- PAGE TITLE -->
-  <h2 style="text-align:center;">GPAS Shop Product Formatter -- 01/12 - B2</h2>
+  <h2 style="text-align:center;">GPAS Shop Product Formatter -- 01/12 - C1</h2>
 
   <!-- 
     MAIN 3-COLUMN TABLE 
@@ -612,7 +612,6 @@ if (cost && !isNaN(cost) && Number(cost) > 0) {
     }
 
     // 4) Normalize price + tags
-    const priceDisplay = formatPrice(cost);
     const tagsDisplay  = normalizeTags(tagsRaw);
 
     // 5) Build card HTML (this is what the shop page will use)
@@ -645,10 +644,12 @@ const cardHTML =
       : "") +
     "<div style='font-family:Lexend; font-size:21px; margin:10px 0; display:flex; justify-content:space-between;'>" +
       "<span><b>" + escapeHtml(code) + "</b></span>" +
-      "<span><b>" + priceDisplay + "</b></span>" +
+     (cost && !isNaN(cost) && Number(cost) > 0
+  ? "<span><b>$ " + Number(cost).toFixed(2) + "</b></span>"
+  : "<span></span>") 
     "</div>" +
     (desc
-      ? "<p style='font-family:Lexend; font-size:21px; line-height:26px; margin:10px 0;'>" +
+      ? "<p style='font-family:Lexend; font-size:21px; font-weight:normal; line-height:26px; margin:10px 0;'>" +
           escapeHtml(desc) +
         "</p>"
       : "") +
@@ -659,11 +660,11 @@ const cardHTML =
          "style='display:inline-block; " +
                 "padding:10px 22px; " +
                 "font-family:Lexend; " +
-                "font-size:20px; " +
+                "font-size:18px; " +
                 "font-weight:bold; " +
-                "color:#000; " +
-                "background:#f2f2f2; " +
-                "border:2px solid #888; " +
+                "color:#fff; " +
+                "background:#2e7d32; " +
+                "border:4px solid #1b5e20; " +
                 "border-radius:999px; " +
                 "box-shadow:0 3px 0 #666; " +
                 "text-decoration:none;'>" +
@@ -674,7 +675,7 @@ const cardHTML =
   : "") +
 
     (tagsDisplay
-      ? "<div style='font-family:Lexend; font-size:18px; color:#666; margin-top:10px;'>Tags: " +
+      ? "<div style='font-family:Lexend; font-size:18px; font-weight:normal; color:#666; margin-top:10px;'>Tags: " +
           escapeHtml(tagsDisplay) +
         "</div>"
       : "") +
