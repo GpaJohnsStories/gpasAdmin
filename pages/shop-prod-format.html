@@ -196,7 +196,7 @@
   </script>
 
   <!-- PAGE TITLE -->
-  <h2 style="text-align:center;">GPAS Shop Product Formatter -- 01/12 - A3</h2>
+  <h2 style="text-align:center;">GPAS Shop Product Formatter -- 01/12 - B1</h2>
 
   <!-- 
     MAIN 3-COLUMN TABLE 
@@ -620,6 +620,12 @@ if (cost && !isNaN(cost) && Number(cost) > 0) {
     // other border colors: #999 Medium Gray, #aaa Light-Medium Gray,
     // #bbb between #aaa and #ccc, #888 dark-medium gray
 
+    /* ===============================================================
+   CREATE BUTTON FOR ONLINE STORE
+   - Displays a pill‑shaped 3D button linking to the product page
+   - Automatically includes detected store name (Amazon, Zazzle, etc.)
+================================================================= */
+    
 const cardHTML =
   "<article style='width:300px; border:4px solid #999; padding:10px; box-sizing:border-box;'>" +
     "<div style='text-align:center;'>" +
@@ -646,11 +652,6 @@ const cardHTML =
           escapeHtml(desc) +
         "</p>"
       : "") +
-/* ===============================================================
-   CREATE BUTTON FOR ONLINE STORE
-   - Displays a pill‑shaped 3D button linking to the product page
-   - Automatically includes detected store name (Amazon, Zazzle, etc.)
-================================================================= */
 
 (purl
   ? "<div style='margin:14px 0; text-align:center;'>" +
