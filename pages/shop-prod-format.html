@@ -96,7 +96,7 @@
 
 /* PRODUCT CARD PREVIEW WIDTH CONTROL */
 #previewBox {
-  width: 310px;
+  width: 300px;
   height: 420px;
   padding: 10px;
   border: 4px solid #ccc;
@@ -189,7 +189,7 @@
   </script>
 
   <!-- PAGE TITLE -->
-  <h2 style="text-align:center;">GPAS Shop Product Formatter -- 01/12 - D1</h2>
+  <h2 style="text-align:center;">GPAS Shop Product Formatter -- 01/12 - E1</h2>
 
   <!-- 
     MAIN 3-COLUMN TABLE 
@@ -639,13 +639,13 @@ const cardHTML =
   (cost && !isNaN(cost) && Number(cost) > 0
     ? " display:flex; justify-content:space-between;'>"
     : " text-align:center;'>") +
-  "<span><b>" + escapeHtml(code) + "</b></span>" +
+  "<span>" + escapeHtml(code) + "</span>" +
   (cost && !isNaN(cost) && Number(cost) > 0
-    ? "<span><b>$ " + Number(cost).toFixed(2) + "</b></span>"
+    ? "<span>$ " + Number(cost).toFixed(2) + "</span>"
     : "") +
 "</div>" +
 (desc
-  ? "<p style='font-family:Lexend; font-size:21px; font-weight:normal; line-height:26px; margin:10px 0;'>" +
+  ? "<p style='font-family:Lexend; font-size:21px; font-weight:400; line-height:26px; margin:10px 0;'>" +
       escapeHtml(desc) +
     "</p>"
   : "") +
