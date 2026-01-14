@@ -354,7 +354,11 @@
         <!-- DESCRIPTION -->
         <label for="desc">Description (600 chars):</label><br>
         <textarea id="desc" maxlength="600" rows="5"></textarea>
-        <div id="descCounter">0 / 600</div>
+        <div style="display:flex; justify-content:space-between; font-size:14px; margin-top:4px;">
+          <span id="descCounter">0 / 600</span>
+          <span id="shortWordPct">0% 5-letter words</span>
+        </div>
+
       </td>
 
       <!-- ========================================================= -->
@@ -398,19 +402,35 @@
   <!-- ============================================================= -->
   <script>
   /* ===============================================================
-     DESCRIPTION CHARACTER COUNTER
+     DESCRIPTION CHARACTER + SHORT WORD COUNTER
      Keeps the "0 / 600" display in sync with textarea length.
   ================================================================= */
-  (function setupDescriptionCounter() {
-    const desc = document.getElementById('desc');
-    const descCounter = document.getElementById('descCounter');
+(function setupDescriptionCounter() {
+  const desc = document.getElementById('desc');
+  const descCounter = document.getElementById('descCounter');
+  const shortWordPct = document.getElementById('shortWordPct');
 
-    if (!desc || !descCounter) return;
+  if (!desc || !descCounter || !shortWordPct) return;
 
-    desc.addEventListener('input', () => {
-      descCounter.textContent = desc.value.length + ' / 600';
-    });
-  })();
+  desc.addEventListener('input', () => {
+    const text = desc.value.trim();
+    descCounter.textContent = text.length + ' / 600';
+
+    if (!text) {
+      shortWordPct.textContent = '0% short words';
+      return;
+    }
+
+    const words = text.split(/\s+/);
+    const shortWords = words.filter(w =>
+      w.replace(/[^a-zA-Z]/g, '').length <= 5
+    );
+
+    const pct = Math.round((shortWords.length / words.length) * 100);
+    shortWordPct.textContent = pct + '% short words';
+  });
+})();
+</script>
 
 /* ===============================================================
    PRODUCT CODE BUILDER
