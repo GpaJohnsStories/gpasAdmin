@@ -248,43 +248,72 @@
 
         <!-- BUILD PRODUCT CODE SECTION -->
 
-        <!-- 2 DROPDOWN BOXES ON SAME LINE -->
+        <!-- 3 DROPDOWN BOXES ON SAME LINE -->
         <div style="display:flex; gap:10px;">
 
-          <!-- INTEREST -->
-          <div>
-            <label for="interest">Interest:</label><br>
-            <select id="interest" style="width:120px;">
-              <option value="" selected></option>
-              <option value="F">FAITH</option>
-              <option value="U">FUN</option>
-              <option value="A">ALL</option>
-            </select>
-          </div>
+<!-- INTEREST -->
+<div>
+  <label for="interest">Interest:</label><br>
+  <select id="interest" style="width:120px; font-weight:bold;">
+    <option value="" selected></option>
+    <option value="F"
+      style="font-weight:bold; background-color:#5A2D82; color:#FFD700;">
+      FAITH
+    </option>
+    <option value="U"
+      style="font-weight:bold; background-color:#B7410E; color:#00FF66;">
+      FUN
+    </option>
+  </select>
+</div>
 
-          <!-- PRODUCT TYPE -->
-          <div>
-            <label for="ptype">Product Type:</label><br>
-            <select id="ptype" style="width:225px;">
-              <option value="" selected></option>
-              <option value="T">T‑SHIRTS</option>
-              <option value="B">BOOKS &amp; BIBLES</option>
-              <option value="O">OTHER STUFF</option>
-              <option value="E">EVERYTHING</option>
-            </select>
-          </div>
+<!-- PRODUCT TYPE -->
+<div>
+  <label for="ptype">Product Type:</label><br>
+  <select id="ptype" style="width:235px; font-weight:bold;">
 
-<!-- Site Code, position 3 of Product Code -->   
-        <div>
-            <label for="site">Site Family:</label>
-            <select id="site" style="width:150px;">
-              <option value="" selected></option>
-              <option value="4">GpasKids</option>
-              <option value="1">GpasFaith</option>
-              <option value="9">GpasShop</option>
-            </select>
-          </div>
-        </div>
+    <option value="" selected></option>
+    <!-- T‑Shirts: rust orange background, bright green text -->
+    <option value="T"
+      style="font-weight:bold; background-color:#B7410E; color:#00FF66;">
+      T‑SHIRTS
+    </option>
+    <!-- Books & Bibles: purple background, gold text -->
+    <option value="B"
+      style="font-weight:bold; background-color:#5A2D82; color:#FFD700;">
+      BOOKS & BIBLES
+    </option>
+    <!-- Other Stuff: medium brown background, white text -->
+    <option value="O"
+      style="font-weight:bold; background-color:#8B5A2B; color:#FFFFFF;">
+      OTHER STUFF
+    </option>
+  </select>
+</div>
+</div>
+
+<!-- Site Code, position 3 of Product Code -->
+<div>
+  <label for="site">Site Family:</label>
+  <select id="site" style="width:150px; font-weight:bold;">
+    <option value="" selected></option>
+    <!-- KIDS: orange background, white text -->
+    <option value="4"
+      style="font-weight:bold; background:#f97316; color:#ffffff;">
+      GpasKids
+    </option>
+    <!-- FAITH: green background, white text -->
+    <option value="1"
+      style="font-weight:bold; background:#228b22; color:#ffffff;">
+      GpasFaith
+    </option>
+    <!-- SHOP: medium brown background, white text -->
+    <option value="9"
+      style="font-weight:bold; background:#a0522d; color:#ffffff;">
+      GpasShop
+    </option>
+  </select>
+</div>
 
         <!-- TAGS LIVE IN COLUMN 1 (AS YOU REQUESTED) -->
         <label for="tags">Search Tags (comma separated ", "):</label><br>
