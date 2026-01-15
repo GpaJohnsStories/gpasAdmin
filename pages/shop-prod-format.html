@@ -11,7 +11,7 @@
   </script>
 
   <meta charset="UTF-8">
-  <title>GPAS Shop Product Formatter</title>
+  <title>GPA'S Shop Product Formatter</title>
 
   <!-- 
     NOTE: Your admin menu is a separate file.
@@ -170,7 +170,7 @@
   </script>
 
   <!-- PAGE TITLE -->
-  <h2 style="text-align:center;">GPAS Shop — Format Product Card</h2>
+  <h2 style="text-align:center;">GPA'S Shop — Format Product Card -- 01/14 - A1</h2>
 
   <!-- 
     MAIN 3-COLUMN TABLE 
@@ -490,6 +490,9 @@ function applySelectedOptionStyle(selectId) {
    - SITE     = F (Faith), K (Kids), S (Shop)
    - Auto-increments suffix by scanning /prod on GitHub
 ================================================================= */
+console.log("PRODUCT CODE SCRIPT LOADED");
+
+  
 async function buildProductCode() {
   const interest = document.getElementById("interest").value.toUpperCase();
   const ptype    = document.getElementById("ptype").value.toUpperCase();
