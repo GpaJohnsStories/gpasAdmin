@@ -723,8 +723,13 @@ if (cost && !isNaN(cost) && Number(cost) > 0) {
       return;
     }
 
-    // 4) Normalize price + tags
-    const tagsDisplay  = normalizeTags(tagsRaw);
+ // 4) Parse + normalize tags (max 10 enforced)
+const tagsParsed = parseTags(tagsRaw);
+if (tagsParsed === null) return; // hard stop if too many tags
+
+const tagsDisplay = tagsParsed.display; // preview only
+const tagsData    = tagsParsed.data;    // saved in data-tags
+
 
     // 5) Build card HTML (this is what the shop page will use)
     //    Adjust structure and classes to match your live product wall.
