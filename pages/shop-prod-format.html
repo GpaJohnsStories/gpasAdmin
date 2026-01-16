@@ -170,7 +170,7 @@
   </script>
 
   <!-- PAGE TITLE -->
-  <h2 style="text-align:center;">GPA'S Shop — Format Product Card -- 01/16 - A1</h2>
+  <h2 style="text-align:center;">GPA'S Shop — Format Product Card -- 01/16 - A2</h2>
 
   <!-- 
     MAIN 3-COLUMN TABLE 
@@ -328,7 +328,8 @@ function applySelectedOptionStyle(selectId) {
 </script>
 
         <!-- TAGS LIVE IN COLUMN 1 (AS YOU REQUESTED) -->
-       <label for="tags">
+      <br>
+        <label for="tags">
   Tags (max 10, 1–2 words each, comma‑separated):
 </label><br>
 
@@ -682,6 +683,14 @@ function detectStoreName(url) {
     return;
   }
 
+// ---------------------------------------------------------------
+// CARD DATE ATTRIBUTE
+// - ISO-8601 timestamp
+// - Uses local PC time
+// - Sortable as a string (newest / oldest)
+// ---------------------------------------------------------------
+const cardDate = new Date().toISOString();
+
   if (!imgurl) {
     alert("ERROR: Product image URL is required.");
     return;
@@ -743,7 +752,15 @@ const tagsData    = tagsParsed.data;    // saved in data-tags
 ================================================================= */
 
 const cardHTML =
-  "<article style='width:300px; border:4px solid #999; padding:10px; box-sizing:border-box;'>" +
+"<article class='product-card' " +
+  "data-code='" + escapeHtml(pcode.toUpperCase()) + "' " +
+  "data-title='" + escapeHtml(title.toLowerCase()) + "' " +
+  "data-author='" + escapeHtml(author.toLowerCase()) + "' " +
+  "data-price='" + (cost && !isNaN(cost) ? Number(cost).toFixed(2) : "") + "' " +
+  "data-tags='" + escapeHtml(tagsData) + "' " +
+  "data-date='" + escapeHtml(cardDate) + "' " +
+  "style='width:300px; border:4px solid #999; padding:10px; box-sizing:border-box;'>"
+
     "<div style='text-align:center;'>" +
       (imgurl
         ? "<a href='" + encodeURI(purl || "#") + "' target='_blank' rel='noopener noreferrer'>" +
@@ -793,11 +810,6 @@ const cardHTML =
     "</div>"
   : "") +
 
-    (tagsDisplay
-      ? "<div style='font-family:Lexend; font-size:18px; font-weight:normal; color:#666; margin-top:10px;'>Tags: " +
-          escapeHtml(tagsDisplay) +
-        "</div>"
-      : "") +
   "</article>";
 
     // 6) Store in global for saving
