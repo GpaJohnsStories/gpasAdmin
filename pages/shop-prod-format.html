@@ -170,7 +170,7 @@
   </script>
 
   <!-- PAGE TITLE -->
-  <h2 style="text-align:center;">GPA'S Shop — Format Product Card -- 01/16 - A3</h2>
+  <h2 style="text-align:center;">GPA'S Shop — Format Product Card -- 01/16 - A4</h2>
 
   <!-- 
     MAIN 3-COLUMN TABLE 
@@ -635,8 +635,8 @@ function parseTags(rawTags) {
     .filter(t => t.length > 0);
 
   if (list.length > 10) {
-    alert("ERROR: Max 10 tags. You entered " + list.length + ".");
-    return null; // hard stop
+    alert("ERROR: Max 10 tags. You entered " + list.length + ". Fix it and try again.");
+    return; 
   }
 
   return {
@@ -670,6 +670,7 @@ function detectStoreName(url) {
      - Updates preview and window.finalProductHTML (for saving).
   ================================================================= */
   function formatListing() {
+alert("formatListing started");
 
   // ---------------------------------------------------------------
   // REQUIRED FIELD GUARDS (HARD STOP)
@@ -679,7 +680,7 @@ function detectStoreName(url) {
   const purl   = document.getElementById("purl").value.trim();
 
   if (!title) {
-    alert("ERROR: Product title is required.");
+    alert("ERROR: Product title is required. Fix it and try again.");
     return;
   }
 
@@ -692,15 +693,70 @@ function detectStoreName(url) {
 const cardDate = new Date().toISOString();
 
   if (!imgurl) {
-    alert("ERROR: Product image URL is required.");
+    alert("ERROR: Product image URL is required. Fix it and try again.");
     return;
   }
 
   if (!purl) {
-    alert("ERROR: Product URL is required.");
+    alert("ERROR: Product URL is required. Fix it and try again.");
     return;
   }
   const storeName = detectStoreName(purl);
+
+// ---------------------------------------------------------------
+// HARD GUARDRAILS — FORMAT MUST FAIL IF ANY RULE IS BROKEN
+// ---------------------------------------------------------------
+
+// Product code
+if (!pcode) {
+  alert("ERROR: Product code is required. Fix it and try again.");
+  return;
+}
+
+// Product URL
+if (!purl) {
+  alert("ERROR: Product URL is required. Fix it and try again.");
+  return;
+}
+
+// Photo URL
+if (!imgurl) {
+  alert("ERROR: Photo URL is required. Fix it and try again.");
+  return;
+}
+
+// Title
+if (!title) {
+  alert("ERROR: Product title is required. Fix it and try again.");
+  return;
+}
+
+// Description — minimum 10 words
+const descWordCount = description
+  .replace(/<[^>]*>/g, "")   // strip allowed HTML
+  .trim()
+  .split(/\s+/)
+  .filter(Boolean)
+  .length;
+
+if (descWordCount < 10) {
+  alert("ERROR: Description must be at least 10 words. Fix it and try again.");
+  return;
+}
+
+// Tags — must be 1–10
+if (!tagsData) {
+  alert("ERROR: At least one tag is required.");
+  return;
+}
+
+const tagCount = tagsData.split(",").filter(Boolean).length;
+
+if (tagCount > 10) {
+  alert("ERROR: No more than 10 tags allowed.");
+  return;
+}
+
   
   // ---------------------------------------------------------------
   // 1) Grab remaining OPTIONAL field values
