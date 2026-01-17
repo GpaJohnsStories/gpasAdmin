@@ -170,7 +170,7 @@
   </script>
 
   <!-- PAGE TITLE -->
-  <h2 style="text-align:center;">GPA'S Shop — Format Product Card -- 01/16 - B3</h2>
+  <h2 style="text-align:center;">GPA'S Shop — Format Product Card -- 01/16 - B4</h2>
 
   <!-- 
     MAIN 3-COLUMN TABLE 
@@ -679,10 +679,10 @@ alert("formatListing started");
   const imgurl = document.getElementById("imgurl").value.trim();
   const purl   = document.getElementById("purl").value.trim();
 
-  if (!title) {
-    alert("ERROR: Product title is required. Fix it and try again.");
-    return;
-  }
+  // if (!title) {
+//    alert("ERROR: Product title is required. Fix it and try again.");
+//    return;
+//  }
 
 // ---------------------------------------------------------------
 // CARD DATE ATTRIBUTE
@@ -692,15 +692,15 @@ alert("formatListing started");
 // ---------------------------------------------------------------
 const cardDate = new Date().toISOString();
 
-  if (!imgurl) {
-    alert("ERROR: Product image URL is required. Fix it and try again.");
-    return;
-  }
+//  if (!imgurl) {
+//    alert("ERROR: Product image URL is required. Fix it and try again.");
+//    return;
+//  }
 
-  if (!purl) {
-    alert("ERROR: Product URL is required. Fix it and try again.");
-    return;
-  }
+//  if (!purl) {
+//    alert("ERROR: Product URL is required. Fix it and try again.");
+//    return;
+//  }
   const storeName = detectStoreName(purl);
 
 // ---------------------------------------------------------------
