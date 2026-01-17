@@ -170,7 +170,7 @@
   </script>
 
   <!-- PAGE TITLE -->
-  <h2 style="text-align:center;">GPA'S Shop — Format Product Card -- 01/17 - A2</h2>
+  <h2 style="text-align:center;">GPA'S Shop — Format Product Card -- 01/17 - A3</h2>
 
   <!-- 
     MAIN 3-COLUMN TABLE 
@@ -639,20 +639,22 @@ let lockedCardDate = "";
 ================================================================= */
 console.log("PRODUCT CODE SCRIPT LOADED");
 
-  
 async function buildProductCode() {
+
+  // HARD STOP: Product identity is locked after first save
+  if (productCodeLocked) return;
+
   const interest = document.getElementById("interest").value.toUpperCase();
   const ptype    = document.getElementById("ptype").value.toUpperCase();
-  const site     = document.getElementById("site").value;  // NEW
+  const site     = document.getElementById("site").value;
 
   // Need all three dropdowns selected before we attempt a code
   if (!interest || !ptype || !site) return;
 
-  // Build prefix with new Site Code in position 3
   const prefix = interest + ptype + site;
 
-  // GitHub API: list files in prod/ directory
-  const apiUrl = "https://api.github.com/repos/GpaJohnsStories/GpasShop/contents/prod";
+  const apiUrl =
+    "https://api.github.com/repos/GpaJohnsStories/GpasShop/contents/shop/prod";
 
   let nextSuffix = "001";
 
@@ -660,14 +662,11 @@ async function buildProductCode() {
     const response = await fetch(apiUrl);
     if (response.ok) {
       const files = await response.json();
-
-      // Match: PREFIX-NNN.html  (case insensitive)
       const regex = new RegExp("^" + prefix + "-(\\d{3})\\.html$", "i");
       let max = 0;
 
       for (const item of files) {
         if (!item || !item.name) continue;
-
         const match = item.name.match(regex);
         if (match && match[1]) {
           const num = parseInt(match[1], 10);
@@ -684,9 +683,7 @@ async function buildProductCode() {
   const finalCode = prefix + "-" + nextSuffix;
   document.getElementById("pcode").value = finalCode;
 }
-
-
-
+  
   // Rebuild code whenever interest or type or site changes
   document.getElementById("interest").addEventListener("change", buildProductCode);
   document.getElementById("ptype").addEventListener("change", buildProductCode);
@@ -699,27 +696,32 @@ async function buildProductCode() {
      - Forces pattern like IP?-NNN.
      - Strips invalid characters, uppercases letters.
   ================================================================= */
-  function validateCode(input) {
-    let v = input.value.toUpperCase();
-    // Only letters, digits, and dash allowed
-    v = v.replace(/[^A-Z0-9\-]/g, "");
+function validateCode(input) {
 
-    const parts = v.split("-");
-    let left = (parts[0] || "").replace(/[^A-Z0-9]/g, "").substring(0, 3);
-    let right = (parts[1] || "").replace(/[^0-9]/g, "").substring(0, 3);
-
-    if (!left) {
-      input.value = "";
-      return;
-    }
-
-    let result = left;
-    if (right || v.includes("-")) result += "-";
-    if (right) result += right;
-
-    input.value = result;
+  // HARD STOP: Product Code cannot be edited once locked
+  if (productCodeLocked) {
+    input.value = lockedProductCode;
+    return;
   }
 
+  let v = input.value.toUpperCase();
+  v = v.replace(/[^A-Z0-9\-]/g, "");
+
+  const parts = v.split("-");
+  let left  = (parts[0] || "").replace(/[^A-Z0-9]/g, "").substring(0, 3);
+  let right = (parts[1] || "").replace(/[^0-9]/g, "").substring(0, 3);
+
+  if (!left) {
+    input.value = "";
+    return;
+  }
+
+  let result = left;
+  if (right || v.includes("-")) result += "-";
+  if (right) result += right;
+
+  input.value = result;
+}
 
   /* ===============================================================
      PRICE VALIDATION (INPUT FIELD)
