@@ -1130,9 +1130,9 @@ function clearFormFields() {
   window.finalProductHTML = '';
 
 // ---- UNLOCK PRODUCT CODE BUILDER ----
-window.productCodeLocked = false;
-window.lockedProductCode = "";
-window.lockedCardDate = "";
+productCodeLocked = false;
+lockedProductCode = "";
+lockedCardDate = "";
 
   // Re-arm product code builder after programmatic reset
   if (interest) { interest.dispatchEvent(new Event('input')); interest.dispatchEvent(new Event('change')); }
